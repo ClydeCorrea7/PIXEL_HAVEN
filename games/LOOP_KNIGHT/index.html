@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PIXEL_HAVEN // GAME SANDBOX</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/icons8-pixel-star-16.png">
+    <style>
+        body {
+            background: #000;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+        }
+        .btn-back {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #fff;
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="game-title">GAME_SANDBOX_LOADED</h1>
+    <p>This is a placeholder for the ArcadeOS environment.</p>
+    <a href="../../index.html" class="btn-back">RETURN TO HUB</a>
+
+    <script>
+        const urlParams = new URL(window.location.href);
+        const title = urlParams.pathname.split('/').filter(x => x).pop();
+        if(title) {
+            document.getElementById('game-title').textContent = title.toUpperCase().replace('-', '//');
+        }
+    </script>
+</body>
+</html>

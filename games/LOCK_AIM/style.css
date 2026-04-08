@@ -1,0 +1,247 @@
+:root {
+  --neon-cyan: #00f0ff;
+  --neon-pink: #ff00ff;
+  --white: #ffffff;
+  --black: #050505;
+  --red: #ff3300;
+  --deep-red: rgba(18, 16, 16, 0.4);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--black);
+  background-image: 
+    radial-gradient(circle at center, var(--deep-red) 0%, transparent 70%),
+    linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+    linear-gradient(90deg, rgba(255, 0, 0, 0.05), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.05));
+  background-size: 100% 100%, 100% 4px, 4px 100%;
+  font-family: 'Press Start 2P', cursive;
+  color: var(--white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#game-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: var(--black);
+  overflow: hidden;
+  border: 4px solid var(--neon-cyan);
+  box-shadow: inset 0 0 100px rgba(0, 240, 255, 0.1);
+}
+
+@media (min-width: 1024px) {
+  #game-container {
+    width: 600px;
+    height: 800px;
+  }
+}
+
+#game-viewport {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* --- HUD --- */
+#hud {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 150;
+  pointer-events: none;
+}
+
+.hud-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.hud-item.secondary {
+  align-items: flex-end;
+}
+
+.label {
+  font-size: 8px;
+  color: var(--neon-pink);
+  text-shadow: 0 0 5px var(--neon-pink);
+}
+
+#score-val, #best-val {
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: var(--white);
+  text-shadow: 0 0 10px var(--neon-cyan);
+}
+
+/* --- STATUS MESSAGE --- */
+#status-msg {
+  position: absolute;
+  bottom: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  color: var(--neon-cyan);
+  letter-spacing: 4px;
+  opacity: 0.8;
+  z-index: 80;
+}
+
+#lock-indicator {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--neon-pink);
+  color: white;
+  padding: 5px 15px;
+  font-size: 8px;
+  letter-spacing: 3px;
+  box-shadow: 0 0 15px var(--neon-pink);
+  border: 1px solid white;
+  z-index: 100;
+}
+
+.hidden { display: none !important; }
+
+/* --- OVERLAYS --- */
+.overlay {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.95);
+  display: flex; justify-content: center; align-items: center;
+  z-index: 200; opacity: 0; pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.overlay.active { opacity: 1; pointer-events: all; }
+
+.content { text-align: center; width: 80%; }
+h1 { font-size: 28px; color: var(--neon-pink); margin-bottom: 25px; text-shadow: 0 0 15px var(--neon-pink); }
+p { font-size: 8px; line-height: 1.8; margin-bottom: 30px; opacity: 0.8; }
+.highlight { color: var(--neon-cyan); text-shadow: 0 0 5px var(--neon-cyan); }
+
+/* --- CONTROLS GUIDE --- */
+.controls-guide {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 40px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.control-scheme { text-align: left; }
+.scheme-title { 
+    display: block; 
+    font-size: 8px; 
+    color: var(--neon-pink); 
+    margin-bottom: 15px; 
+    letter-spacing: 2px;
+}
+
+.control-scheme p { 
+    margin-bottom: 10px; 
+    font-size: 8px;
+    opacity: 1;
+}
+
+.mission-brief { 
+    font-size: 8px; 
+    letter-spacing: 1px; 
+    margin-top: 20px;
+    color: var(--white);
+    opacity: 0.6;
+}
+
+/* --- INDUSTRIAL BUTTONS --- */
+button {
+  display: block; 
+  width: 100%; 
+  padding: 18px; 
+  margin: 12px 0;
+  background: rgba(0, 0, 0, 0.6); 
+  color: var(--white); 
+  border: 1px solid var(--neon-cyan);
+  font-family: inherit; 
+  font-size: 11px; 
+  cursor: pointer;
+  letter-spacing: 2px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
+}
+
+button::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.2), transparent);
+  transition: 0.5s;
+}
+
+button:hover { 
+  background: rgba(0, 240, 255, 0.1); 
+  transform: scale(1.05) translateX(5px);
+  box-shadow: 0 0 30px rgba(0, 240, 255, 0.4);
+  border-color: var(--white);
+}
+
+button:hover::before { left: 100%; }
+
+button:active { transform: scale(0.95); background: var(--neon-cyan); color: black; }
+
+.exit-btn { border-color: var(--neon-pink); color: var(--white); }
+.exit-btn:hover { border-color: var(--white); box-shadow: 0 0 30px rgba(255, 0, 255, 0.4); background: rgba(255, 0, 255, 0.1); }
+.exit-btn::before { background: linear-gradient(90deg, transparent, rgba(255, 0, 255, 0.2), transparent); }
+
+/* --- GLITCH --- */
+.glitch { position: relative; }
+.glitch::before, .glitch::after { content: attr(data-text); position: absolute; top:0; left:0; width:100%; height:100%; }
+.glitch::before { left: 2px; text-shadow: -2px 0 var(--neon-pink); clip: rect(44px, 450px, 56px, 0); animation: glitch-anim 5s infinite linear alternate-reverse; }
+.glitch::after { left: -2px; text-shadow: -2px 0 var(--neon-cyan); clip: rect(44px, 450px, 56px, 0); animation: glitch-anim2 2s infinite linear alternate-reverse; }
+
+@keyframes glitch-anim { 0% { clip: rect(10px, 9999px, 80px, 0); } 100% { clip: rect(90px, 9999px, 70px, 0); } }
+@keyframes glitch-anim2 { 0% { clip: rect(40px, 9999px, 20px, 0); } 100% { clip: rect(50px, 9999px, 40px, 0); } }
+
+/* --- CRT --- */
+.scanlines {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0,0,0,0.25) 50%), linear-gradient(90deg, rgba(255,0,0,0.06), rgba(0,255,0,0.02), rgba(0,0,255,0.06));
+  background-size: 100% 4px, 3px 100%;
+  pointer-events: none; z-index: 100; opacity: 0.3;
+}
+.vignette {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  background: radial-gradient(circle, rgba(0,0,0,0) 40%, rgba(0,0,0,0.8) 100%);
+  pointer-events: none; z-index: 90;
+}

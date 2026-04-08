@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>LOCK // AIM - PIXEL_HAVEN</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/icons8-pixel-star-16.png">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="game-container">
+        <!-- CRT EFFECTS -->
+        <div class="scanlines"></div>
+        <div class="vignette"></div>
+        
+        <div id="game-viewport">
+            <canvas id="gameCanvas"></canvas>
+            
+            <!-- HUD -->
+            <div id="hud">
+                <div class="hud-item">
+                    <span class="label">SCORE:</span>
+                    <span id="score-val">000000</span>
+                </div>
+                <div class="hud-item secondary">
+                    <span class="label">BEST:</span>
+                    <span id="best-val">000000</span>
+                </div>
+            </div>
+
+            <!-- STATUS MESSAGE -->
+            <div id="status-msg">STABILIZING...</div>
+
+            <!-- INPUT FEEDBACK (LOCK INDICATOR) -->
+            <div id="lock-indicator" class="hidden">LOCKED</div>
+        </div>
+
+        <!-- OVERLAYS -->
+        <div id="start-screen" class="overlay active">
+            <div class="content">
+                <h1 class="glitch" data-text="LOCK//AIM">LOCK//AIM</h1>
+                
+                <!-- PLATFORM CONTROLS -->
+                <div class="controls-guide">
+                    <div class="control-scheme">
+                        <span class="scheme-title">[ PC // DESKTOP ]</span>
+                        <p>MOVE MOUSE : <span class="highlight">AIM</span></p>
+                        <p>HOLD CLICK : <span class="highlight">LOCK</span></p>
+                        <p>RELEASE : <span class="highlight">FIRE</span></p>
+                    </div>
+                    
+                    <div class="control-scheme">
+                        <span class="scheme-title">[ MOBILE // TOUCH ]</span>
+                        <p>LEFT SIDE : <span class="highlight">AIM</span></p>
+                        <p>RIGHT HOLD : <span class="highlight">LOCK</span></p>
+                        <p>RELEASE : <span class="highlight">FIRE</span></p>
+                    </div>
+                </div>
+
+                <p class="mission-brief">
+                    ONE SHOT AT A TIME.<br>
+                    ONLY ELIMINATIONS RESTORE CAPABILITIES.
+                </p>
+
+                <button id="start-btn">ENGAGE SYSTEM</button>
+                <button class="exit-btn">ABORT MISSION</button>
+            </div>
+        </div>
+
+        <div id="game-over-screen" class="overlay">
+            <div class="content">
+                <h1 class="glitch" data-text="CORE BROKEN">CORE BROKEN</h1>
+                <p>TRANSMISSION TERMINATED.</p>
+                <div class="final-stats">
+                    FINAL SCORE: <span id="final-score">000000</span>
+                </div>
+                <button id="retry-btn">REBOOT SYSTEM</button>
+                <button class="exit-btn">EXIT TO HUB</button>
+            </div>
+        </div>
+
+        <div id="pause-screen" class="overlay">
+            <div class="content">
+                <h1>PAUSED</h1>
+                <button id="resume-btn">RESUME</button>
+                <button id="restart-btn">RESTART</button>
+                <button class="exit-btn">EXIT</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- GAME LOGIC -->
+    <script type="module" src="game.js"></script>
+</body>
+</html>

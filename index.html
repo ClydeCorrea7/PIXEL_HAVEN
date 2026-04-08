@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>PIXEL_HAVEN // ARCADE_OS</title>
+    <meta name="description" content="A high-performance, retro-arcade browser hub with pixel visual effects.">
+    
+    <!-- STYLING -->
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/icons8-pixel-star-16.png">
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+
+    <!-- CRT EFFECTS OVERLAY -->
+    <div class="scanlines"></div>
+    <div class="crt-flicker"></div>
+    
+    <!-- DYNAMIC BACKGROUND GRID -->
+    <div class="background-grid"></div>
+
+    <!-- MAIN ARCADE HUB -->
+    <main class="arcade-container">
+        
+        <header class="main-header" id="system-header">
+            <h1>PIXEL_HAVEN</h1>
+            <div class="sub-header">ARCADE_OS // v1.0.4 [CONNECTED]</div>
+        </header>
+
+        <!-- GRID SELECTOR MOUNT -->
+        <div id="game-grid-container" class="selector-grid">
+            <!-- Dynamically Rendered via selector.js -->
+        </div>
+
+        <!-- GAME DETAIL PANEL -->
+        <section class="game-details" id="game-details-panel">
+            <h2 class="details-name">SYSTEM LOADED</h2>
+            <p class="details-desc">SELECT A GAME TO BEGIN TRANSMISSION</p>
+        </section>
+
+        <div class="mobile-swipe-hint">
+            [ SWIPE TO NAVIGATE // TAP TO SELECT ]
+        </div>
+
+    </main>
+
+    <!-- MAIN LOGIC BOOTSTRAP -->
+    <script type="module" src="src/main.js"></script>
+
+</body>
+</html>

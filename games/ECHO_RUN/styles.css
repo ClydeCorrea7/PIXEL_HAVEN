@@ -1,0 +1,273 @@
+:root {
+  --cyan: #00f0ff;
+  --magenta: #ff00aa;
+  --echo-green: #00ff88;
+  --bg: #050505;
+  --text: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  font-family: 'Press Start 2P', cursive;
+  color: var(--text);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#game-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  overflow: hidden;
+  border: 4px solid var(--echo-green);
+}
+
+@media (min-width: 1024px) {
+  #game-container {
+    width: 600px;
+    height: 800px;
+  }
+}
+
+/* --- CRT & VIGNETTE --- */
+.scanlines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  background-size: 100% 4px, 3px 100%;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.2;
+}
+
+.vignette {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(0,0,0,0) 40%, rgba(0,0,0,0.8) 100%);
+  pointer-events: none;
+  z-index: 90;
+}
+
+#game-viewport {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+#gameCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* --- HUD --- */
+#hud {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  z-index: 80;
+}
+
+.hud-item {
+  font-size: 10px;
+  color: var(--echo-green);
+  text-shadow: 2px 2px #000;
+}
+
+.meter-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.meter-bg {
+  width: 100px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--echo-green);
+}
+
+#pulse-bar {
+  width: 0%;
+  height: 100%;
+  background: var(--echo-green);
+  box-shadow: 0 0 10px var(--echo-green);
+  transition: width 0.1s linear;
+}
+
+#pulse-bar.active {
+  background: var(--cyan);
+  box-shadow: 0 0 15px var(--cyan);
+}
+
+/* --- MESSAGES --- */
+#status-msg {
+  position: absolute;
+  bottom: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: 12px;
+  color: var(--cyan);
+  text-shadow: 2px 2px #000;
+  z-index: 80;
+}
+
+/* --- MOBILE CONTROLS --- */
+#mobile-controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 120px;
+  display: none; /* Hidden by default */
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 150;
+  pointer-events: none;
+}
+
+#mobile-controls button {
+  width: 64px;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid var(--echo-green);
+  color: var(--echo-green);
+  font-family: inherit;
+  font-size: 16px;
+  pointer-events: all;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#mobile-controls button:active {
+  background: var(--echo-green);
+  color: black;
+}
+
+.left-group {
+  display: flex;
+  gap: 10px;
+}
+
+#btn-jump {
+  width: 80px !important;
+  border-color: var(--cyan) !important;
+  color: var(--cyan) !important;
+}
+
+/* --- OVERLAYS --- */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.content {
+  text-align: center;
+  width: 80%;
+}
+
+h1 { font-size: 24px; margin-bottom: 20px; color: var(--echo-green); }
+h2 { font-size: 18px; margin-bottom: 20px; color: var(--cyan); }
+p { font-size: 10px; line-height: 1.8; margin-bottom: 30px; opacity: 0.8; }
+
+.overlay button {
+  display: block; 
+  width: 100%; 
+  padding: 18px; 
+  margin: 12px 0;
+  background: rgba(0, 0, 0, 0.6); 
+  color: var(--text); 
+  border: 1px solid var(--echo-green);
+  font-family: inherit; 
+  font-size: 11px; 
+  cursor: pointer;
+  letter-spacing: 2px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
+}
+
+.overlay button::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.2), transparent);
+  transition: 0.5s;
+}
+
+.overlay button:hover { 
+  background: rgba(0, 255, 136, 0.1); 
+  transform: scale(1.05) translateX(5px);
+  box-shadow: 0 0 30px rgba(0, 255, 136, 0.4);
+  border-color: var(--text);
+}
+
+.overlay button:hover::before {
+  left: 100%;
+}
+
+.overlay button:active {
+  transform: scale(0.95);
+  background: var(--echo-green);
+  color: black;
+}
+
+.exit-btn { border-color: var(--magenta) !important; }
+.exit-btn:hover { background: var(--magenta) !important; box-shadow: 0 0 15px var(--magenta) !important; }
+
+.controls-hint { font-size: 8px; opacity: 0.6; margin-bottom: 20px; }
+
+/* --- GLITCH --- */
+.glitch { position: relative; }
+.glitch::before, .glitch::after { content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+.glitch::before { left: 2px; text-shadow: -2px 0 var(--magenta); clip: rect(44px, 450px, 56px, 0); animation: glitch-anim 5s infinite linear alternate-reverse; }
+.glitch::after { left: -2px; text-shadow: -2px 0 var(--echo-green); clip: rect(44px, 450px, 56px, 0); animation: glitch-anim2 2s infinite linear alternate-reverse; }
+
+@keyframes glitch-anim { 0% { clip: rect(10px, 9999px, 80px, 0); } 100% { clip: rect(90px, 9999px, 70px, 0); } }
+@keyframes glitch-anim2 { 0% { clip: rect(40px, 9999px, 20px, 0); } 100% { clip: rect(50px, 9999px, 40px, 0); } }

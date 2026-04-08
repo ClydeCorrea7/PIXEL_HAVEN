@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>PULSE//SURVIVE</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/icons8-pixel-star-16.png">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="game-container">
+        <!-- ORIENTATION OVERLAY -->
+        <div id="orientation-overlay">
+            <div class="rotate-icon">🔄</div>
+            <p>ROTATE DEVICE</p>
+            <span class="sub-text">LANDSCAPE MODE REQUIRED</span>
+        </div>
+        
+        <!-- CRT EFFECTS -->
+        <div class="scanlines"></div>
+        <div id="freeze-vignette"></div>
+
+        <div id="game-viewport">
+            <canvas id="gameCanvas"></canvas>
+            
+            <!-- MOBILE JOYSTICK -->
+            <div id="joystick-container">
+                <div id="joystick-ring">
+                    <div id="joystick-nub"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- HUD -->
+        <div id="hud">
+            <div class="hud-item">PULSE: <span id="score-display">00:00.0</span></div>
+            <div class="hud-item center-hud">CHARGE: <span id="pulse-countdown">10.0s</span></div>
+            <div id="time-status" class="hud-item">STATUS: <span id="time-label">FROZEN</span></div>
+        </div>
+
+        <!-- OVERLAYS -->
+        <div id="menu-screen" class="overlay active">
+            <div class="content">
+                <h1 class="glitch" data-text="PULSE//SURVIVE">PULSE//SURVIVE</h1>
+                <p class="blink">PRESS [ SPACE ] OR [ TAP ] TO BOOT</p>
+                <div class="controls-hint">
+                    WASD: MOVE // TIME FLOWS WITH MOTION<br>
+                    RED = DANGER // CYAN = SAFETY
+                </div>
+                <!-- Invisible button for overlay click -->
+                <button id="start-btn" style="position:absolute; top:0; left:0; width:100%; height:100%; opacity:0; cursor:pointer;"></button>
+            </div>
+        </div>
+
+        <div id="death-screen" class="overlay">
+            <div class="content">
+                <h2 class="death-msg">LINK SEVERED</h2>
+                <p>FINAL PULSE: <span id="final-score">0.0S</span></p>
+                <button id="restart-btn" class="retry-btn">REBOOT_SYSTEM</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>

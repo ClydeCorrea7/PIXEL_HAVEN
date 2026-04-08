@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NULL//PAUSE</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/icons8-pixel-star-16.png">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="game-container">
+        <!-- ORIENTATION OVERLAY -->
+        <div id="orientation-overlay">
+            <div class="rotate-icon">🔄</div>
+            <p>ROTATE DEVICE</p>
+            <span class="sub-text">LANDSCAPE MODE REQUIRED</span>
+        </div>
+
+        <!-- CRT EFFECTS -->
+        <div class="scanlines"></div>
+        <div id="null-overlay"></div>
+
+        <!-- HUD -->
+        <div id="hud">
+            <div class="hud-top">
+                <div class="hud-item">LEVEL: <span id="level-val">1</span> // NULL_CHG: <span id="null-timer">7.5s</span></div>
+                <div class="hud-item hud-right">
+                    GEAR: <span id="gear-val">1</span> // 
+                    SPEED: <span id="speed-val">0</span> KM/H //
+                    DST: <span id="dist-val">0</span>M
+                </div>
+            </div>
+            
+            <div id="gauge-container">
+                <div id="null-bar-bg">
+                    <div id="null-bar-fill"></div>
+                </div>
+                <div id="cooldown-bar-bg" class="hidden">
+                    <div id="cooldown-bar-fill"></div>
+                    <span class="bar-label">COOLING...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- OVERLAYS -->
+        <div id="menu-screen" class="overlay active">
+            <div class="content">
+                <h1 class="glitch" data-text="NULL//PAUSE">NULL//PAUSE</h1>
+                <div class="controls-hint">
+                    WASD: DRIVE // SPACE: NULL STATE<br>
+                    RED = DEAD // YELLOW = SPEED
+                </div>
+                <div class="color-selection">
+                    <p>CHASSIS_COLOR:</p>
+                    <div class="color-options">
+                        <div class="color-opt active" data-color="#f2ff00" style="background: #f2ff00;"></div>
+                        <div class="color-opt" data-color="#00f0ff" style="background: #00f0ff;"></div>
+                        <div class="color-opt" data-color="#ff004c" style="background: #ff004c;"></div>
+                        <div class="color-opt" data-color="#7800ff" style="background: #7800ff;"></div>
+                        <div class="color-opt" data-color="#00ff41" style="background: #00ff41;"></div>
+                    </div>
+                </div>
+                <button id="start-btn" class="init-btn">INITIATE_SESSION</button>
+            </div>
+        </div>
+
+        <div id="death-screen" class="overlay">
+            <div class="content">
+                <h2 class="death-msg">SYSTEM_CRASH</h2>
+                <p>LEVEL ACHIEVED: <span id="final-score">1</span></p>
+                <button id="restart-btn" class="retry-btn">REBOOT_SYSTEM</button>
+            </div>
+        </div>
+
+        <div id="game-viewport">
+            <canvas id="gameCanvas"></canvas>
+            
+            <!-- MOBILE CONTROLS -->
+            <div id="mobile-controls">
+                <!-- Left Joystick -->
+                <div id="joystick-boundary">
+                    <div id="joystick-ring">
+                        <div id="joystick-nub"></div>
+                    </div>
+                </div>
+
+                <!-- Right Buttons -->
+                <div id="action-pads">
+                    <div id="accel-btn" class="pad">ACCEL</div>
+                    <div id="null-btn" class="pad">NULL</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>

@@ -1,0 +1,440 @@
+:root {
+  --cyan: #00f0ff;
+  --magenta: #ff00aa;
+  --yellow: #ffff00;
+  --bg: #050505;
+  --text: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+body,
+html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  font-family: 'Press Start 2P', cursive;
+  color: var(--text);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* GLOBAL SCREEN EFFECTS */
+#game-viewport {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: filter 0.3s, transform 0.3s;
+}
+
+#game-viewport.mod-speed-surge { filter: saturate(2) contrast(1.2) brightness(1.1); }
+#game-viewport.mod-gravity-flip { filter: hue-rotate(180deg) invert(0.05); }
+#game-viewport.mod-low-gravity { filter: sepia(0.3) brightness(1.2); }
+#game-viewport.mod-heavy-gravity { filter: grayscale(0.5) contrast(1.5); }
+#game-viewport.mod-phase-obstacles { filter: opacity(0.8) blur(0.5px); }
+#game-viewport.mod-screen-distortion { animation: screen-shake 0.2s infinite; }
+#game-viewport.mod-reverse-momentum { filter: sepia(0.5) hue-rotate(-50deg); }
+#game-viewport.mod-shadow-echo { filter: drop-shadow(4px 4px 0px var(--magenta)); }
+
+@keyframes screen-shake {
+  0% { transform: translate(1px, 1px); }
+  25% { transform: translate(-1px, -1px); }
+  50% { transform: translate(-1px, 1px); }
+  75% { transform: translate(1px, -1px); }
+}
+
+#game-container {
+  position: relative;
+  width: 100vw;
+  height: 56.25vw;
+  /* 16:9 Aspect Ratio */
+  max-width: 100%;
+  max-height: 100%;
+  background: #000;
+  border: 4px solid var(--cyan);
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+  overflow: hidden;
+}
+
+@media (max-aspect-ratio: 16/9) {
+  #game-container {
+    width: 100vw;
+    height: 100vh;
+  }
+}
+
+@media (min-width: 1024px) {
+  #game-container {
+    width: 800px;
+    height: 500px;
+  }
+}
+
+canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  image-rendering: pixelated;
+}
+
+/* --- CRT EFFECTS --- */
+.scanlines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%,
+      rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg,
+      rgba(255, 0, 0, 0.06),
+      rgba(0, 255, 0, 0.02),
+      rgba(0, 0, 255, 0.06));
+  background-size: 100% 4px, 3px 100%;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.3;
+}
+
+/* --- HUD --- */
+#hud {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  display: flex;
+  justify-content: space-between;
+  text-shadow: 2px 2px #000;
+  font-size: 10px;
+  z-index: 50;
+  pointer-events: none;
+}
+
+#slow-mo-indicator {
+  color: var(--yellow);
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+
+#event-indicator {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  background: var(--magenta);
+  padding: 5px 15px;
+  font-size: 10px;
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+  border: 2px solid #fff;
+  box-shadow: 0 0 15px var(--magenta);
+}
+
+#event-indicator.warning {
+  background: var(--yellow);
+  color: #000;
+  border-color: #000;
+  box-shadow: 0 0 15px var(--yellow);
+}
+
+#event-indicator.active {
+  opacity: 1;
+  animation: blink-soft 0.5s infinite;
+}
+
+#slow-mo-indicator.active {
+  opacity: 1;
+  animation: blink-soft 1s infinite;
+}
+
+@keyframes blink-soft {
+  0% {
+    opacity: 0.5;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.5;
+  }
+}
+
+/* --- OVERLAYS --- */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.content {
+  text-align: center;
+}
+
+h1 {
+  font-size: 32px;
+  color: var(--cyan);
+  margin-bottom: 20px;
+  text-shadow: 3px 0 var(--magenta);
+}
+
+.overlay p {
+  font-size: 12px;
+  margin-bottom: 30px;
+  line-height: 2;
+}
+
+button {
+  display: block; 
+  width: 100%; 
+  min-width: 200px;
+  padding: 18px; 
+  margin: 12px 0;
+  background: rgba(0, 0, 0, 0.6); 
+  color: var(--text); 
+  border: 1px solid var(--magenta);
+  font-family: inherit; 
+  font-size: 14px; 
+  cursor: pointer;
+  letter-spacing: 2px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
+}
+
+button::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 0, 170, 0.2), transparent);
+  transition: 0.5s;
+}
+
+button:hover { 
+  background: rgba(255, 0, 170, 0.1); 
+  transform: scale(1.05) translateX(5px);
+  box-shadow: 0 0 30px rgba(255, 0, 170, 0.4);
+  border-color: var(--text);
+}
+
+button:hover::before {
+  left: 100%;
+}
+
+button:active {
+  transform: scale(0.95);
+  background: var(--magenta);
+  color: black;
+}
+
+.controls-hint {
+  font-size: 8px;
+  opacity: 0.6;
+  margin-top: 40px;
+  line-height: 1.6;
+}
+
+/* --- ORIENTATION LOCK --- */
+#orientation-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bg);
+  z-index: 500;
+  display: none;
+  /* Controlled via JS */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border: 4px solid var(--magenta);
+}
+
+#orientation-overlay .rotate-icon {
+  font-size: 50px;
+  margin-bottom: 20px;
+  animation: rotate-anim 2s infinite ease-in-out;
+}
+
+@keyframes rotate-anim {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(90deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+#orientation-overlay p {
+  font-size: 14px;
+  color: var(--cyan);
+  margin-bottom: 10px;
+  text-shadow: 2px 0 var(--magenta);
+}
+
+#orientation-overlay .sub-text {
+  font-size: 8px;
+  opacity: 0.6;
+  letter-spacing: 1px;
+}
+
+/* --- MOBILE ON-SCREEN CONTROLS --- */
+#mobile-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 300; 
+  display: none; /* Hidden by default for desktop */
+}
+
+@media (max-width: 1024px) {
+  #mobile-controls {
+    display: block; /* Visible for mobile/tablets */
+  }
+}
+
+#slow-mo-btn {
+  width: 64px;
+  height: 64px;
+  border-radius: 0; /* Perfect square */
+  padding: 0;
+  border: 3px solid var(--cyan);
+  background: #000;
+  color: var(--cyan);
+  font-family: inherit;
+  font-size: 8px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+  transition: all 0.1s;
+}
+
+#slow-mo-btn:active {
+  transform: scale(0.9);
+}
+
+#slow-mo-btn.active {
+  background: var(--cyan);
+  color: #000;
+  box-shadow: 0 0 20px var(--cyan);
+}
+
+/* --- GLITCH --- */
+.glitch {
+  position: relative;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch::before {
+  left: 2px;
+  text-shadow: -2px 0 var(--magenta);
+  clip: rect(44px, 450px, 56px, 0);
+  animation: glitch-anim 5s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+  left: -2px;
+  text-shadow: -2px 0 var(--cyan);
+  clip: rect(44px, 450px, 56px, 0);
+  animation: glitch-anim2 2s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+  0% {
+    clip: rect(10px, 9999px, 80px, 0);
+  }
+
+  20% {
+    clip: rect(60px, 9999px, 10px, 0);
+  }
+
+  40% {
+    clip: rect(30px, 9999px, 50px, 0);
+  }
+
+  60% {
+    clip: rect(70px, 9999px, 40px, 0);
+  }
+
+  80% {
+    clip: rect(20px, 9999px, 20px, 0);
+  }
+
+  100% {
+    clip: rect(90px, 9999px, 70px, 0);
+  }
+}
+
+@keyframes glitch-anim2 {
+  0% {
+    clip: rect(40px, 9999px, 20px, 0);
+  }
+
+  20% {
+    clip: rect(10px, 9999px, 90px, 0);
+  }
+
+  40% {
+    clip: rect(60px, 9999px, 30px, 0);
+  }
+
+  60% {
+    clip: rect(20px, 9999px, 60px, 0);
+  }
+
+  80% {
+    clip: rect(80px, 9999px, 10px, 0);
+  }
+
+  100% {
+    clip: rect(50px, 9999px, 40px, 0);
+  }
+}

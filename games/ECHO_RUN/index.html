@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>ECHO//LOOP</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/icons8-pixel-star-16.png">
+</head>
+
+<body>
+    <div id="game-container">
+        <!-- CRT EFFECTS -->
+        <div class="scanlines"></div>
+        <div class="vignette"></div>
+
+        <div id="game-viewport">
+            <canvas id="gameCanvas"></canvas>
+
+            <!-- HUD -->
+            <div id="hud">
+                <div class="hud-item">ASCENT: <span id="height-val">0</span>m</div>
+                <div class="hud-item meter-box">
+                    ECHO PULSE:
+                    <div class="meter-bg">
+                        <div id="pulse-bar"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MESSAGES -->
+            <div id="status-msg">STABILIZING...</div>
+        </div>
+
+        <!-- START SCREEN -->
+        <div id="start-screen" class="overlay active">
+            <div class="content">
+                <h1 class="glitch" data-text="ECHO//LOOP">ECHO//LOOP</h1>
+                <p>CLIMB AS HIGH AS POSSIBLE.<br>EVERY 3.5s, YOUR RECENT PAST REPLAYS.<br>TRUST NO INPUT.</p>
+                <div class="controls-hint">
+                    PC: A/D = MOVE | SPACE = JUMP<br>
+                    MOBILE: USE ON-SCREEN BUTTONS
+                </div>
+                <button id="start-btn">INITIALIZE</button>
+            </div>
+        </div>
+
+        <!-- PAUSE SCREEN -->
+        <div id="pause-screen" class="overlay">
+            <div class="content">
+                <h2>SYSTEM PAUSED</h2>
+                <button id="resume-btn">RESUME</button>
+                <button id="restart-btn">REBOOT</button>
+                <button class="exit-btn">EXIT TO HUB</button>
+            </div>
+        </div>
+
+        <!-- GAME OVER SCREEN -->
+        <div id="game-over-screen" class="overlay">
+            <div class="content">
+                <h2 class="death-msg">SYNC LOST</h2>
+                <p>HEIGHT REACHED: <span id="final-height">0</span>m</p>
+                <button id="retry-btn">RE-LINK</button>
+                <button class="exit-btn">EXIT TO HUB</button>
+            </div>
+        </div>
+
+        <!-- MOBILE CONTROLS -->
+        <div id="mobile-controls">
+            <div class="left-group">
+                <button id="btn-left">←</button>
+                <button id="btn-right">→</button>
+            </div>
+            <button id="btn-jump">JUMP</button>
+        </div>
+    </div>
+
+    <script type="module" src="game.js"></script>
+</body>
+
+</html>

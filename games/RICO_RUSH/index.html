@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>RICO//RUSH - PIXEL_HAVEN</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/icons8-pixel-star-16.png">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="game-container">
+        <!-- CRT EFFECTS -->
+        <div class="scanlines"></div>
+
+        <!-- ORIENTATION OVERLAY -->
+        <div id="orientation-overlay">
+            <div class="rotate-icon">🔄</div>
+            <p>ROTATE DEVICE</p>
+            <span class="sub-text">LANDSCAPE MODE REQUIRED</span>
+        </div>
+
+        <div id="game-viewport">
+            <!-- CANVAS MOUNT -->
+            <canvas id="gameCanvas"></canvas>
+        </div>
+
+        <!-- HUD -->
+        <div id="hud">
+            <div class="hud-box left">SECTOR: <span id="level-num">1</span></div>
+            <div id="kinetic-meter" class="hud-box kinetic-meter hidden">
+                <div class="label">KINETIC ENERGY</div>
+                <div class="value"><span id="bounce-count">25</span> / 25</div>
+                <div class="bar-bg"><div id="bounce-bar" class="bar-fill"></div></div>
+            </div>
+            <div class="hud-box right">CHARGE: <span id="shot-count">1/1</span></div>
+        </div>
+
+        <!-- OVERLAYS -->
+        <div id="start-screen" class="overlay active">
+            <div class="content">
+                <h1 class="glitch" data-text="RICO//RUSH">RICO//RUSH</h1>
+                <p>ONE SHOT. ALL TARGETS.<br>PERFECT GEOMETRY REQUIRED.</p>
+                <button id="start-btn">INITIALIZE SYSTEM</button>
+                <div class="controls-hint">
+                    DRAG TO AIM // RELEASE TO FIRE<br>
+                    ELIMINATE ALL ENEMIES WITH ONE BOUNCE-SHOT
+                </div>
+            </div>
+        </div>
+
+        <div id="result-screen" class="overlay">
+            <div class="content">
+                <h2 id="result-status" class="glitch" data-text="MISSION CLEAR">MISSION CLEAR</h2>
+                <p id="result-desc">ALL SECTORS SECURED</p>
+                <button id="next-btn">NEXT SECTOR</button>
+                <button id="retry-btn" class="secondary">RE-CALIBRATE</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>

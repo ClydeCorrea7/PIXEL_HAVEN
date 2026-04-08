@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BRICK//BREACH</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/icons8-pixel-star-16.png">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+    <div id="game-container">
+        <!-- CRT EFFECTS -->
+        <div class="scanlines"></div>
+        <div id="fx-overlay"></div>
+
+        <!-- HUD -->
+        <div id="hud">
+            <div class="hud-top">
+                <div class="hud-item">LVL: <span id="level-val">1</span> // SC: <span id="score-val">0</span></div>
+                <div id="modifier-hud" class="hud-item hidden">MOD: <span id="mod-type">NONE</span> <span
+                        id="mod-timer">0.0s</span></div>
+            </div>
+        </div>
+
+        <!-- OVERLAYS -->
+        <div id="menu-screen" class="overlay active">
+            <div class="content">
+                <h1 class="glitch" data-text="BRICK//BREACH">BRICK//BREACH</h1>
+                <p class="blink">INITIATE_SESSION</p>
+                <div class="controls-hint">
+                    MOUSE / TOUCH: MOVE PADDLE<br>
+                    SPACE: START BALL
+                </div>
+                <button id="start-btn" class="ghost-btn"></button>
+            </div>
+        </div>
+
+        <div id="game-over-screen" class="overlay">
+            <div class="content">
+                <h2 class="death-msg">BREACH_FAILED</h2>
+                <p>FINAL_SCORE: <span id="final-score">0</span></p>
+                <button id="restart-btn" class="retry-btn">REBOOT_SYSTEM</button>
+            </div>
+        </div>
+
+        <div id="win-screen" class="overlay">
+            <div class="content">
+                <h2 class="win-msg">SECTOR_CLEARED</h2>
+                <p>PROCEED TO NEXT SECTOR?</p>
+                <button id="next-btn" class="retry-btn">INITIATE_NEXT</button>
+            </div>
+        </div>
+
+        <!-- VIEWPORT -->
+        <div id="game-viewport">
+            <canvas id="gameCanvas"></canvas>
+        </div>
+    </div>
+
+    <!-- Landscape Lock (v4.4) -->
+    <div id="landscape-lock">
+        <div class="rotate-icon">🔄</div>
+        <div class="lock-text">RE-ORIENT_SYSTEM</div>
+        <div class="lock-sub">LANDSCAPE_MODE_REQUIRED</div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>MEM//FRAGMENT</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/icons8-pixel-star-16.png">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="game-container">
+        <!-- CRT EFFECTS -->
+        <div class="scanlines"></div>
+        <div class="vignette"></div>
+
+        <div id="game-viewport">
+            <!-- HUD -->
+            <div id="hud">
+                <div class="hud-item">LEVEL: <span id="level-val">1</span></div>
+                <div class="hud-item meter-box">
+                    CORRUPTION: 
+                    <div class="meter-bg">
+                        <div id="corruption-bar"></div>
+                    </div>
+                </div>
+                <div class="hud-item">SCORE: <span id="score-val">0</span></div>
+            </div>
+
+            <!-- GAME GRID -->
+            <div id="grid-container">
+                <div id="grid"></div>
+            </div>
+
+            <!-- MESSAGES -->
+            <div id="status-msg">READY?</div>
+        </div>
+
+        <!-- START SCREEN -->
+        <div id="start-screen" class="overlay active">
+            <div class="content">
+                <h1 class="glitch" data-text="MEM//FRAGMENT">MEM//FRAGMENT</h1>
+                <p>REPLICATE THE SEQUENCE.<br>TRUST NOTHING.</p>
+                <button id="start-btn">BOOT UP</button>
+                <div class="controls-hint">
+                    CLICK / TAP TO INTERACT<br>
+                    ESC TO PAUSE
+                </div>
+            </div>
+        </div>
+
+        <!-- PAUSE SCREEN -->
+        <div id="pause-screen" class="overlay">
+            <div class="content">
+                <h2>SYSTEM PAUSED</h2>
+                <button id="resume-btn">RESUME</button>
+                <button id="restart-btn">REBOOT</button>
+                <button class="exit-btn">EXIT TO HUB</button>
+            </div>
+        </div>
+
+        <!-- GAME OVER SCREEN -->
+        <div id="game-over-screen" class="overlay">
+            <div class="content">
+                <h2 class="death-msg">MEMORY FAILURE</h2>
+                <p>SCORE: <span id="final-score">0</span></p>
+                <p>CORRUPTION REACHED: <span id="final-corruption">0</span>%</p>
+                <button id="retry-btn">RE-LINK</button>
+                <button class="exit-btn">EXIT TO HUB</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="game.js"></script>
+</body>
+</html>

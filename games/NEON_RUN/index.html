@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>NEON//RUN</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/icons8-pixel-star-16.png">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="game-container">
+        <!-- CRT EFFECTS -->
+        <div class="scanlines"></div>
+
+        <!-- ORIENTATION OVERLAY -->
+        <div id="orientation-overlay">
+            <div class="rotate-icon">🔄</div>
+            <p>ROTATE DEVICE</p>
+            <span class="sub-text">LANDSCAPE MODE REQUIRED</span>
+        </div>
+        
+        <div id="game-viewport">
+            <!-- CANVAS MOUNT -->
+            <canvas id="gameCanvas"></canvas>
+        </div>
+
+        <!-- HUD -->
+        <div id="hud">
+            <div class="score-box">DISTANCE: <span id="score">0</span>m</div>
+            <div id="event-indicator">TIME ANOMALY</div>
+            <div id="slow-mo-indicator">SLOW-MO: OFF</div>
+        </div>
+
+        <!-- START SCREEN -->
+        <div id="start-screen" class="overlay active">
+            <div class="content">
+                <h1 class="glitch" data-text="NEON//RUN">NEON//RUN</h1>
+                <p>[ SPACE ] or [ TAP ] TO START</p>
+                <div class="controls-hint">
+                    PC: SPACE=JUMP | SHIFT=SLOW-MO | ESC=PAUSE<br>
+                    MOBILE: TAP=JUMP | BUTTON=SLOW-MO
+                </div>
+            </div>
+        </div>
+
+        <!-- PAUSE SCREEN -->
+        <div id="pause-screen" class="overlay">
+            <div class="content">
+                <h2>SYSTEM PAUSED</h2>
+                <button id="resume-btn">RESUME</button>
+                <button id="restart-btn">RESTART</button>
+                <button id="exit-btn">EXIT TO HUB</button>
+            </div>
+        </div>
+
+        <!-- GAME OVER SCREEN -->
+        <div id="game-over-screen" class="overlay">
+            <div class="content">
+                <h2 class="death-msg">LINK SEVERED</h2>
+                <p>FINAL DISTANCE: <span id="final-score">0</span>m</p>
+                <button id="retry-btn">RE-LINK [R]</button>
+                <button class="exit-btn">EXIT TO HUB</button>
+            </div>
+        </div>
+
+        <!-- MOBILE CONTROLS -->
+        <div id="mobile-controls">
+            <button id="slow-mo-btn">SLOW</button>
+        </div>
+    </div>
+
+    <script type="module" src="game.js"></script>
+</body>
+</html>

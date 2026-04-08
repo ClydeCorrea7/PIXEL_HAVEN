@@ -1,0 +1,324 @@
+:root {
+    --bg: #050505;
+    --cyan: #00f2ff;
+    --pink: #ff00ff;
+    --lime: #aaff00;
+    --gold: #ffcc00;
+    --danger: #ff3333;
+    --terminal-font: 'Press Start 2P', cursive;
+    --body-font: 'Outfit', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background-color: #000;
+    color: var(--cyan);
+    font-family: var(--body-font);
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#arcade-terminal {
+    position: relative;
+    width: 900px; /* Landscape Width (v2.7) */
+    height: 600px; /* Landscape Height (v2.7) */
+    background: var(--bg);
+    border: 4px solid #333;
+    box-shadow: 0 0 50px rgba(0,0,0,0.8);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    overflow: hidden;
+    animation: background-glitch 5s infinite;
+}
+
+@keyframes background-glitch {
+    0%, 100% { background: #050505; }
+    92% { background: #050505; }
+    93% { background: #0a050a; }
+    94% { background: #050505; }
+    95% { background: #050a0a; }
+}
+
+.flash-success { animation: flash-cyan 0.4s ease-out; }
+.flash-error { animation: flash-red 0.4s ease-out; }
+
+@keyframes flash-cyan {
+    0% { box-shadow: inset 0 0 50px var(--cyan); }
+    100% { box-shadow: inset 0 0 0 transparent; }
+}
+@keyframes flash-red {
+    0% { box-shadow: inset 0 0 50px var(--danger); }
+    100% { box-shadow: inset 0 0 0 transparent; }
+}
+
+/* CRT EFFECTS */
+.scanlines {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* HUD */
+#hud-top, #hud-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 2px solid #222;
+    background: rgba(255,255,255,0.02);
+    font-family: var(--terminal-font);
+    font-size: 10px;
+}
+
+.hud-item { display: flex; align-items: center; gap: 8px; }
+.label { color: #666; }
+.value { text-shadow: 0 0 10px var(--cyan); }
+
+#fail-meter { display: flex; gap: 4px; }
+.fail-bar { width: 12px; height: 12px; border: 1px solid #444; background: #222; }
+.fail-bar.active { background: var(--danger); box-shadow: 0 0 8px var(--danger); }
+
+/* GRID */
+#game-viewport {
+    flex: 1;
+    position: relative;
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#memory-grid {
+    display: grid;
+    gap: 10px;
+    width: 100%;
+    height: 100%;
+}
+
+.tile {
+    position: relative;
+    background: #111;
+    border: 2px solid #222;
+    cursor: pointer;
+    perspective: 1000px;
+    transition: transform 0.3s, border-color 0.3s;
+}
+
+.tile:hover {
+    border-color: #444;
+}
+
+.tile-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.tile.flipped .tile-inner {
+    transform: rotateY(180deg);
+}
+
+.tile-front, .tile-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.8rem; /* Bigger icons (v2.2) */
+}
+
+.tile-front {
+    background: #111;
+    color: #444;
+}
+
+.tile-back {
+    background: #1a1a1a;
+    transform: rotateY(180deg);
+    border: 2px solid var(--cyan);
+    box-shadow: inset 0 0 15px rgba(0, 242, 255, 0.2);
+}
+
+.tile.matched .tile-back {
+    border-color: var(--lime);
+    box-shadow: inset 0 0 15px rgba(170, 255, 0, 0.2);
+}
+
+.tile.powerup .tile-back {
+    border-color: var(--gold);
+}
+
+.tile.powerup.flipped .tile-back {
+    color: var(--gold);
+    text-shadow: 0 0 15px var(--gold);
+}
+
+/* DISGUISE GLITCH */
+.tile.disguised::after {
+    content: '';
+    position: absolute;
+    top: 5px; right: 5px;
+    width: 4px; height: 4px;
+    background: var(--pink);
+    border-radius: 50%;
+    opacity: 0.5;
+    animation: blink 0.5s step-end infinite;
+}
+
+@keyframes blink { 
+    0%, 100% { opacity: 0; }
+    50% { opacity: 0.5; }
+}
+
+.hold-progress {
+    position: absolute;
+    bottom: 0; left: 0;
+    height: 4px;
+    background: var(--pink);
+    width: 0%;
+}
+
+/* OVERLAYS */
+.overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9);
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.overlay.active { display: flex; }
+
+.glitch-title {
+    font-family: var(--terminal-font);
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.status-box { padding: 10px; border: 1px solid var(--cyan); font-family: var(--terminal-font); font-size: 10px; margin-bottom: 20px; }
+
+button {
+    background: none;
+    border: 2px solid var(--cyan);
+    color: var(--cyan);
+    padding: 15px 30px;
+    font-family: var(--terminal-font);
+    font-size: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: var(--cyan);
+    color: #000;
+    box-shadow: 0 0 20px var(--cyan);
+}
+
+/* SHUFFLE ANIMATION */
+@keyframes shuffle-anim {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(0.8); opacity: 0.5; filter: blur(5px); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.shuffling {
+    animation: data-scramble 0.5s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+}
+
+@keyframes data-scramble {
+    0% { transform: scale(1) skew(0deg); filter: blur(0) brightness(1); }
+    15% { transform: scale(0.95) skew(5deg); filter: blur(2px) brightness(2); }
+    30% { transform: scale(1.05) skew(-5deg); filter: blur(4px) brightness(0.5); }
+    45% { transform: scale(0.9) skew(10deg); filter: blur(8px) brightness(3); }
+    60% { transform: scale(1.1) skew(-10deg); filter: blur(10px) brightness(0.2); }
+    100% { transform: scale(1) skew(0deg); filter: blur(0) brightness(1); }
+}
+
+/* GLITCH SUCCESS EFFECT (v2.9) */
+.tile.matched::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 100%; height: 100%;
+    background: var(--lime);
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    z-index: 5;
+    pointer-events: none;
+    animation: success-glitch 0.4s ease-out forwards;
+}
+
+@keyframes success-glitch {
+    0% { opacity: 1; transform: translate(-50%, -50%) scale(1) skew(0deg); clip-path: inset(0 0 0 0); }
+    20% { opacity: 0.8; transform: translate(-52%, -48%) scale(1.1) skew(10deg); clip-path: inset(10% 0 40% 0); }
+    40% { opacity: 1; transform: translate(-48%, -52%) scale(1.2) skew(-10deg); clip-path: inset(50% 0 10% 0); }
+    60% { opacity: 0.5; transform: translate(-50%, -50%) scale(1.3) skew(20deg); clip-path: inset(20% 0 60% 0); }
+    80% { opacity: 0.8; transform: translate(-51%, -49%) scale(1.4) skew(-20deg); clip-path: inset(5% 0 15% 0); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(1.5) skew(0deg); clip-path: inset(0 0 0 0); }
+}
+
+/* HINT PULSE EFFECT (v2.12) */
+.powerup-hint {
+    border-color: var(--gold) !important;
+    animation: pulse-hint 0.5s infinite alternate;
+    z-index: 50;
+}
+
+@keyframes pulse-hint {
+    0% { box-shadow: 0 0 5px var(--gold); filter: brightness(1); }
+    100% { box-shadow: 0 0 40px var(--gold); filter: brightness(1.7); }
+}
+
+/* ORIENTATION LOCK (v2.11) */
+#orientation-lock {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: #000;
+    z-index: 9999;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--cyan);
+    text-align: center;
+    padding: 20px;
+}
+
+#orientation-lock .rotate-icon {
+    font-size: 4rem;
+    margin-top: 20px;
+    animation: rotate-jump 2s infinite;
+}
+
+@keyframes rotate-jump {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(90deg); }
+}
+
+@media screen and (orientation: portrait) {
+    #orientation-lock { display: flex; }
+}
+
+@media screen and (max-width: 900px) {
+    #arcade-terminal {
+        transform: scale(calc(100vw / 950));
+    }
+}
