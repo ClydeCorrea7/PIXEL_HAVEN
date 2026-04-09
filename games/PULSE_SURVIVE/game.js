@@ -94,25 +94,17 @@ class Game {
 
         const handleTouch = (e) => {
             if (this.state !== 'PLAYING') return;
-            const touch = e.touches[0];
+            const touch = e.targetTouches[0];
+            if (!touch) return;
             const rect = jContainer.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-            
-            const dx = touch.clientX - centerX;
-            const dy = touch.clientY - centerY;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            const moveX = Math.min(dist, this.joystick.maxDist) * (dx / dist);
-            const moveY = Math.min(dist, this.joystick.maxDist) * (dy / dist);
-
-            this.joystick.active = true;
-            this.joystick.current = new Vec2(dx, dy);
+...
             jNub.style.transform = `translate(calc(-50% + ${moveX}px), calc(-50% + ${moveY}px))`;
         };
 
-        jContainer.addEventListener('touchstart', (e) => { e.preventDefault(); handleTouch(e); });
-        jContainer.addEventListener('touchmove', (e) => { e.preventDefault(); handleTouch(e); });
+        jContainer.addEventListener('touchstart', (e) => { e.preventDefault(); handleTouch(e); }, { passive: false });
+        jContainer.addEventListener('touchmove', (e) => { e.preventDefault(); handleTouch(e); }, { passive: false });
         jContainer.addEventListener('touchend', (e) => {
+            e.preventDefault();
             this.joystick.active = false;
             this.joystick.current = new Vec2(0, 0);
             jNub.style.transform = `translate(-50%, -50%)`;
@@ -120,6 +112,10 @@ class Game {
 
         document.getElementById('start-btn').onclick = (e) => { e.stopPropagation(); this.start(); };
         document.getElementById('restart-btn').onclick = (e) => { e.stopPropagation(); this.start(); };
+        document.getElementById('fullscreen-btn').onclick = () => {
+            if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(() => {});
+            else document.exitFullscreen().catch(() => {});
+        };
         
         // Mobile tap to start
         window.addEventListener('touchstart', (e) => {
@@ -137,6 +133,11 @@ class Game {
     }
 
     start() {
+        // Auto Fullscreen Request (v1.5)
+        if (!document.fullscreenElement && (window.innerHeight < window.innerWidth)) {
+            document.documentElement.requestFullscreen().catch(() => {});
+        }
+
         this.state = 'PLAYING';
         this.score = 0;
         this.elapsedTime = 0;

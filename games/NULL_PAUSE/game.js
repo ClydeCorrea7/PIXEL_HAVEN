@@ -214,7 +214,8 @@ class Game {
         const nullBtn = document.getElementById('null-btn');
 
         const updateJoystick = (e) => {
-            const touch = e.touches[0];
+            const touch = e.targetTouches[0];
+            if (!touch) return;
             const rect = jBoundary.getBoundingClientRect();
             const centerX = rect.left + rect.width / 2;
             const centerY = rect.top + rect.height / 2;
@@ -224,9 +225,18 @@ class Game {
             jNub.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
         };
 
-        jBoundary.addEventListener('touchstart', (e) => { e.preventDefault(); updateJoystick(e); });
-        jBoundary.addEventListener('touchmove', (e) => { e.preventDefault(); updateJoystick(e); });
+        jBoundary.addEventListener('touchstart', (e) => { 
+            e.preventDefault(); 
+            updateJoystick(e); 
+        }, { passive: false });
+        
+        jBoundary.addEventListener('touchmove', (e) => { 
+            e.preventDefault(); 
+            updateJoystick(e); 
+        }, { passive: false });
+        
         jBoundary.addEventListener('touchend', (e) => {
+            e.preventDefault();
             this.joystickX = 0;
             jNub.style.transform = `translate(-50%, -50%)`;
         });
@@ -244,6 +254,10 @@ class Game {
 
         document.getElementById('start-btn').onclick = (e) => { e.stopPropagation(); this.start(); };
         document.getElementById('restart-btn').onclick = (e) => { e.stopPropagation(); this.start(); };
+        document.getElementById('fullscreen-btn').onclick = () => {
+            if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(() => {});
+            else document.exitFullscreen().catch(() => {});
+        };
 
         requestAnimationFrame((t) => this.loop(t));
     }
@@ -268,6 +282,12 @@ class Game {
             return;
         }
         if (this.state === 'PLAYING') return;
+        
+        // Auto Fullscreen Request (v1.18)
+        if (!document.fullscreenElement && (window.innerHeight < window.innerWidth)) {
+            document.documentElement.requestFullscreen().catch(() => {});
+        }
+
         this.state = 'PLAYING';
         this.score = 0;
         this.elapsedTime = 0;
