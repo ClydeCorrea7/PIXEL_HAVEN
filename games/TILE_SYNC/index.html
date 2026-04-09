@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TILE//SYNC - PIXEL_HAVEN ARCADE</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="portrait-warning">
+        <h2 class="glitch-text" style="font-size: 2rem;">PLEASE ROTATE</h2>
+        <p class="subtitle">LANDSCAPE MODE REQUIRED</p>
+    </div>
+    <div id="app" class="app-container">
+        <!-- Landing Overlay -->
+        <div id="overlay" class="overlay">
+            <div class="overlay-content">
+                <h1 class="glitch-text" data-text="TILE//SYNC">TILE//SYNC</h1>
+                <p class="subtitle">PIXEL_HAVEN // ARCADE_OS</p>
+                <div class="mode-selection">
+                    <button class="mode-btn safe" onclick="game.start('safe')">
+                        <span class="mode-title">SAFE MODE</span>
+                        <span class="mode-desc">Pairs & Quads // No Decay</span>
+                    </button>
+                    <button class="mode-btn spicy" onclick="game.start('spicy')">
+                        <span class="mode-title">SPICY MODE</span>
+                        <span class="mode-desc">Balanced Mix // Light Decay</span>
+                    </button>
+                    <button class="mode-btn chaos" onclick="game.start('chaos')">
+                        <span class="mode-title">CHAOS MODE</span>
+                        <span class="mode-desc">Hex Heavy // Severe Decay</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <main class="game-layout">
+            <!-- Left Side: Board -->
+            <div class="board-container">
+                <div id="board" class="mahjong-board"></div>
+            </div>
+
+            <!-- Right Side: UI Panel -->
+            <aside class="ui-panel">
+                <div class="panel-section preview-section">
+                    <div class="section-label">SELECTED</div>
+                    <div id="selected-preview" class="selected-preview-slot">
+                        <div class="empty-symbol">?</div>
+                    </div>
+                    <div id="selection-counter" class="selection-counter">0 / 2</div>
+                </div>
+
+                <div class="panel-section action-section">
+                    <button id="execute-btn" class="btn-primary" disabled onclick="game.executeMatch()">EXECUTE <small>[SPACE]</small></button>
+                    <button id="dismiss-btn" class="btn-secondary" onclick="game.dismissSelection()">DISMISS <small>[C]</small></button>
+                </div>
+
+                <div class="panel-section hammer-section">
+                    <div class="section-label">HAMMER SYSTEM</div>
+                    <div class="charge-meter-container">
+                        <div id="charge-meter" class="charge-meter-fill" style="width: 0%"></div>
+                        <div class="charge-markers">
+                            <span></span><span></span><span></span><span></span>
+                        </div>
+                    </div>
+                    <div id="charge-text" class="charge-status">CHARGE: 0 / 10</div>
+                    <button id="hammer-btn" class="btn-hammer" onclick="game.activateHammer()">
+                        <span class="hammer-icon">🔨</span>
+                        <span id="hammer-count">0</span>
+                    </button>
+                </div>
+
+                <div class="panel-section status-section">
+                    <div id="game-status" class="status-message">READY</div>
+                </div>
+                
+                <div class="panel-section game-info">
+                   <div class="info-item">
+                       <span class="info-label">LEVEL:</span>
+                       <span id="display-level" class="info-value">1</span>
+                   </div>
+                   <div class="info-item">
+                       <span class="info-label">MODE:</span>
+                       <span id="display-mode" class="info-value">-</span>
+                   </div>
+                </div>
+            </aside>
+        </main>
+        
+        <!-- Feedback Overlay -->
+        <div id="feedback-toast" class="toast"></div>
+    </div>
+    <script src="game.js"></script>
+<script src="../../core/arcade_bridge.js"></script>
+</body>
+</html>

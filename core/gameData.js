@@ -83,6 +83,14 @@ export const GAMES = [
     color: "#ff00ff",
     description: "NEURAL DECEPTION PROTOCOL",
     genre: "PUZZLE"
+  },
+  {
+    id: "TILE_SYNC",
+    name: "TILE//SYNC",
+    path: "games/TILE_SYNC/index.html",
+    color: "#00f2ff",
+    description: "MAHJONG SIGNAL SYNCHRONIZATION",
+    genre: "PUZZLE"
   }
 ];
 

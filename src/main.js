@@ -15,9 +15,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize Navigation logic (Keyboard / Swipe)
     const nav = new NavigationHandler(selector);
     
-    // Global Click Listener for Audio initialization (Web Audio standard)
+    // Global Click Listener for Audio and Fullscreen initialization
     window.addEventListener('click', () => {
         VFX.initAudio();
+        
+        // Force Fullscreen
+        if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen().catch(err => {
+                console.warn(`Fullscreen request failed: ${err.message}`);
+            });
+        }
     }, { once: true });
     
     // Optional background ambiance?
