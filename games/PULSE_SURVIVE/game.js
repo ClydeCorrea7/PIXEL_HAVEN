@@ -97,7 +97,17 @@ class Game {
             const touch = e.targetTouches[0];
             if (!touch) return;
             const rect = jContainer.getBoundingClientRect();
-...
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            const dx = touch.clientX - centerX;
+            const dy = touch.clientY - centerY;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            const moveX = Math.min(dist, this.joystick.maxDist) * (dx / dist);
+            const moveY = Math.min(dist, this.joystick.maxDist) * (dy / dist);
+
+            this.joystick.active = true;
+            this.joystick.current = new Vec2(dx, dy);
             jNub.style.transform = `translate(calc(-50% + ${moveX}px), calc(-50% + ${moveY}px))`;
         };
 
