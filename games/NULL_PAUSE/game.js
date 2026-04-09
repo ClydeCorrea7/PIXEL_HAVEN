@@ -290,6 +290,7 @@ class Game {
     winLevel() {
         this.level++;
         this.sounds.shift(); // Victory sound
+        this.state = 'WIN'; // Bypass PLAYING guard in start()
         this.start(); // Restart at next level complexity
     }
 

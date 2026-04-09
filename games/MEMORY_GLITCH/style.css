@@ -143,6 +143,12 @@ body {
 .tile-front {
     background: #111;
     color: #444;
+    animation: blink-faint 3s infinite;
+}
+
+@keyframes blink-faint {
+    0%, 100% { opacity: 1; color: #444; }
+    50% { opacity: 0.7; color: #222; }
 }
 
 .tile-back {
@@ -166,21 +172,18 @@ body {
     text-shadow: 0 0 15px var(--gold);
 }
 
-/* DISGUISE GLITCH */
-.tile.disguised::after {
-    content: '';
-    position: absolute;
-    top: 5px; right: 5px;
-    width: 4px; height: 4px;
-    background: var(--pink);
-    border-radius: 50%;
-    opacity: 0.5;
-    animation: blink 0.5s step-end infinite;
+/* DISGUISE GLITCH - DEPRECATED: Reveal-tell was too obvious (v2.13) */
+
+.identity-shift {
+    animation: identity-glitch 0.5s ease-out;
 }
 
-@keyframes blink { 
-    0%, 100% { opacity: 0; }
-    50% { opacity: 0.5; }
+@keyframes identity-glitch {
+    0% { transform: scale(1); filter: brightness(3) contrast(2); }
+    25% { transform: scale(1.1) skew(5deg); filter: hue-rotate(90deg); }
+    50% { transform: scale(0.9) skew(-5deg); filter: brightness(0); }
+    75% { transform: scale(1.05) skew(2deg); filter: hue-rotate(-90deg); }
+    100% { transform: scale(1); filter: brightness(1); }
 }
 
 .hold-progress {

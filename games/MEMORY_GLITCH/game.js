@@ -200,7 +200,7 @@ class MemoryGlitch {
             el.className = `tile ${t.powerup ? 'powerup' : ''} ${t.disguised ? 'disguised' : ''}`;
             el.innerHTML = `
                 <div class="tile-inner">
-                    <div class="tile-front"></div>
+                    <div class="tile-front">◈</div>
                     <div class="tile-back" style="font-size: ${fontSize}">${t.displaySymbol}</div>
                     <div class="hold-progress"></div>
                 </div>
@@ -227,12 +227,12 @@ class MemoryGlitch {
         if (tile.disguised) {
             this.holdTile = tile;
             const progress = el.querySelector('.hold-progress');
-            progress.style.transition = 'width 3s linear';
+            progress.style.transition = 'width 2s linear';
             progress.style.width = '100%';
 
             this.holdTimer = setTimeout(() => {
                 this.revealTrueIdentity(tile, el);
-            }, 3000);
+            }, 2000);
         }
 
         // Tap logic (Flip)
@@ -259,6 +259,9 @@ class MemoryGlitch {
         tile.displaySymbol = tile.symbol;
         el.querySelector('.tile-back').textContent = tile.symbol;
         el.classList.remove('disguised');
+        el.classList.add('identity-shift');
+        setTimeout(() => el.classList.remove('identity-shift'), 500);
+        
         this.statusMsg("IDENTITY_VERIFIED");
         this.cancelHold();
     }
@@ -346,9 +349,24 @@ class MemoryGlitch {
             // Shuffle the indices
             this.shuffleArray(indices);
 
-            // Assign new shuffled indices to the unmatched tiles
+            // Assign new shuffled indices and re-apply disguise (v2.14)
+            const config = this.levels[this.currentLevelIndex];
             unmatched.forEach((t, i) => {
                 t.index = indices[i];
+                
+                // Reshuffle disguise identity
+                t.disguised = Math.random() < config.disguise;
+                if (t.disguised) {
+                    let falseSymbol = this.symbols[Math.floor(Math.random() * this.symbols.length)];
+                    while(falseSymbol === t.symbol) falseSymbol = this.symbols[Math.floor(Math.random() * this.symbols.length)];
+                    t.displaySymbol = falseSymbol;
+                } else {
+                    t.displaySymbol = t.symbol;
+                }
+                
+                // Sync DOM
+                t.dom.querySelector('.tile-back').textContent = t.displaySymbol;
+                t.dom.className = `tile ${t.powerup ? 'powerup' : ''} ${t.disguised ? 'disguised' : ''}`;
             });
 
             // Re-sort the primary tiles array by the new indices
