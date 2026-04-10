@@ -91,6 +91,14 @@ export const GAMES = [
     color: "#00f2ff",
     description: "MAHJONG SIGNAL SYNCHRONIZATION",
     genre: "PUZZLE"
+  },
+  {
+    id: "RECIPE_PANIC",
+    name: "RECIPE//PANIC",
+    path: "games/RECIPE_PANIC/index.html",
+    color: "#ff00ea",
+    description: "SYSTEM CAKE PROTOCOL",
+    genre: "ARCADE"
   }
 ];
 

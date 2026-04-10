@@ -149,10 +149,12 @@ body {
         flex: 1;
     }
     .mode-btn .mode-title {
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
     .mode-btn .mode-desc {
-        display: none;
+        display: block;
+        font-size: 0.6rem;
+        line-height: 1.2;
     }
 }
 

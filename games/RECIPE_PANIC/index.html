@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>RECIPE//PANIC - PIXEL_HAVEN ARCADE</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+    <div class="portrait-warning">
+        <h2 class="glitch-text" style="font-size: 2rem;">PLEASE ROTATE</h2>
+        <p class="subtitle">LANDSCAPE MODE REQUIRED</p>
+    </div>
+    <div id="app" class="app-container">
+        <!-- CRT Screen Overlay -->
+        <div class="scanlines"></div>
+        <div class="crt-flicker" id="crt-flicker"></div>
+
+        <!-- Landing Overlay -->
+        <div id="overlay" class="overlay">
+            <div class="overlay-content">
+                <h1 class="glitch-text" data-text="RECIPE//PANIC">RECIPE//PANIC</h1>
+                <p class="subtitle">PIXEL_HAVEN // ARCADE_OS</p>
+                <div class="mode-selection">
+                    <button class="mode-btn regular" onclick="game.start('regular')">
+                        <span class="mode-title">REGULAR MODE</span>
+                        <span class="mode-desc">4 Layers // No Recipe Shifts</span>
+                    </button>
+                    <button class="mode-btn hard" onclick="game.start('hard')">
+                        <span class="mode-title">HARD MODE</span>
+                        <span class="mode-desc">5 Layers // 50% Shift Probability</span>
+                    </button>
+                    <button class="mode-btn extreme" onclick="game.start('extreme')">
+                        <span class="mode-title">EXTREME MODE</span>
+                        <span class="mode-desc">7 Layers // Constant Recipe Mutation</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Interface -->
+        <main class="game-layout">
+            <!-- TOP BAR: Status & Timer -->
+            <header class="game-header">
+                <div class="header-segment lives-container">
+                    <span class="label">STATUS:</span>
+                    <div id="lives-display" class="lives-icons">
+                        <span class="life-icon active">❤️</span>
+                        <span class="life-icon active">❤️</span>
+                        <span class="life-icon active">❤️</span>
+                    </div>
+                </div>
+                <div class="header-segment timer-container">
+                    <div class="timer-track">
+                        <div id="timer-bar" class="timer-fill"></div>
+                        <div id="shift-marker" class="shift-marker"></div>
+                    </div>
+                </div>
+                <div class="header-segment score-container">
+                    <span class="label">SYNC:</span>
+                    <span id="score-display">000</span>
+                </div>
+            </header>
+
+            <div class="main-content">
+                <!-- CENTER: Player Stack -->
+                <section class="player-zone">
+                    <div class="zone-label">[ ACTIVE_STACK ]</div>
+                    <div id="player-stack" class="cake-stack">
+                        <!-- Dynamic layers -->
+                    </div>
+                    <div class="stack-base"></div>
+                </section>
+
+                <!-- RIGHT: Target Recipe -->
+                <aside class="recipe-zone">
+                    <div class="zone-label">[ TARGET_RECIPE ]</div>
+                    <div id="target-recipe" class="recipe-display">
+                        <!-- Dynamic requirement list -->
+                    </div>
+                    <div id="shift-alert" class="shift-alert">RECIPE SHIFT DETECTED</div>
+                </aside>
+            </div>
+
+            <!-- BOTTOM: Ingredients -->
+            <footer class="ingredient-zone">
+                <div class="ingredient-tabs">
+                    <button class="tab-btn active" data-category="shape">SHAPE</button>
+                    <button class="tab-btn" data-category="base">BASE</button>
+                    <button class="tab-btn" data-category="icing">ICING</button>
+                    <button class="tab-btn" data-category="topping">TOPPING</button>
+                    <button id="extra-tab" class="tab-btn hidden" data-category="extra">EXTRA</button>
+                    <button id="extra2-tab" class="tab-btn hidden" data-category="extra2">LINK</button>
+                    <button id="extra3-tab" class="tab-btn hidden" data-category="extra3">DATA</button>
+                </div>
+                <div class="ingredient-grid-container">
+                    <div id="ingredient-grid" class="ingredient-grid">
+                        <!-- Dynamic tools -->
+                    </div>
+                </div>
+                <div class="action-bar">
+                    <button id="trash-btn" class="action-btn trash" onclick="game.clearStack()">TRASH [R]</button>
+                    <button id="submit-btn" class="action-btn submit" onclick="game.submitCake()">SUBMIT [SPACE]</button>
+                </div>
+            </footer>
+        </main>
+
+        <!-- Feedback Overlay -->
+        <div id="feedback-layer" class="feedback-layer"></div>
+    </div>
+
+    <!-- AUDIO (Implicit in PIXEL_HAVEN) -->
+    
+    <script src="game.js" type="module"></script>
+    <script src="../../core/arcade_bridge.js"></script>
+</body>
+</html>
