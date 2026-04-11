@@ -3,92 +3,94 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
     <title>CLASH//CORE</title>
     <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/icons8-pixel-star-16.png">
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Press+Start+2P&display=swap"
         rel="stylesheet">
-
 </head>
 
 <body>
-    <div id="game-container">
-        <!-- CRT EFFECTS -->
-        <div class="scanlines"></div>
-        <div class="vignette"></div>
+    <div class="game-wrapper">
+        <div class="game-container" id="gameContainer">
+            <div id="clash-terminal">
+                <!-- CRT EFFECTS -->
+                <div class="scanlines"></div>
+                <div class="vignette"></div>
 
-        <div id="game-viewport">
-            <!-- CANVAS FOR COMBAT -->
-            <canvas id="gameCanvas"></canvas>
+                <div id="game-viewport">
+                    <!-- CANVAS FOR COMBAT -->
+                    <canvas id="gameCanvas"></canvas>
 
-            <!-- HUD: TOP SECTION -->
-            <div id="hud">
-                <div class="hud-top">
-                    <div class="hud-item meter-box">
-                        <div class="meter-label">CORE INTEGRITY</div>
-                        <div class="meter-bg hp-bar-bg">
-                            <div id="hp-bar" style="width: 100%;"></div>
+                    <!-- HUD: TOP SECTION -->
+                    <div id="hud">
+                        <div class="hud-top">
+                            <div class="hud-item meter-box">
+                                <div class="meter-label">CORE INTEGRITY</div>
+                                <div class="meter-bg hp-bar-bg">
+                                    <div id="hp-bar" style="width: 100%;"></div>
+                                </div>
+                            </div>
+                            <div class="hud-item score-box">
+                                <div class="meter-label">SYNC SCORE</div>
+                                <div id="score-val">000000</div>
+                            </div>
                         </div>
                     </div>
-                    <div class="hud-item score-box">
-                        <div class="meter-label">SYNC SCORE</div>
-                        <div id="score-val">000000</div>
+
+                    <!-- ENEMY TIMING INDICATOR -->
+                    <div id="timing-indicator">
+                        <div class="ring-container">
+                            <svg width="80" height="80" viewBox="0 0 80 80">
+                                <circle class="ring-bg" cx="40" cy="40" r="30"></circle>
+                                <circle id="pulse-ring" cx="40" cy="40" r="30"></circle>
+                                <circle id="perfect-clash-window" class="perfect-window" cx="40" cy="40" r="30"></circle>
+                            </svg>
+                            <div id="clash-prompt">SYNC</div>
+                        </div>
+                        <div class="timer-label" id="enemy-name">INITIATING...</div>
+                    </div>
+
+                    <!-- FEEDBACK -->
+                    <div id="feedback-area">
+                        <div id="range-indicator">OUT OF RANGE</div>
+                        <div id="combat-log">STABLE</div>
                     </div>
                 </div>
-            </div>
 
-            <!-- ENEMY TIMING INDICATOR: PULSING OVER ENEMY -->
-            <div id="timing-indicator">
-                <div class="ring-container">
-                    <svg width="80" height="80" viewBox="0 0 80 80">
-                        <circle class="ring-bg" cx="40" cy="40" r="30"></circle>
-                        <circle id="pulse-ring" cx="40" cy="40" r="30"></circle>
-                        <circle id="perfect-clash-window" class="perfect-window" cx="40" cy="40" r="30"></circle>
-                    </svg>
-                    <div id="clash-prompt">SYNC</div>
+                <!-- START SCREEN -->
+                <div id="start-screen" class="overlay active">
+                    <div class="content">
+                        <h1 class="glitch" data-text="CLASH//CORE">CLASH//CORE</h1>
+                        <p>ONLY PERFECT CLASHES DEAL DAMAGE.<br>WAIT FOR THE SYNC PULSE.<br>TIME YOUR STRIKE PRECISELY.</p>
+                        <div class="controls-hint">
+                            PC: SPACE or CLICK to CLASH<br>
+                            MOBILE: TAP to CLASH
+                        </div>
+                        <button id="start-btn">BOOT CORE</button>
+                    </div>
                 </div>
-                <div class="timer-label" id="enemy-name">INITIATING...</div>
-            </div>
 
-            <!-- FEEDBACK: BOTTOM SECTION -->
-            <div id="feedback-area">
-                <div id="range-indicator">OUT OF RANGE</div>
-                <div id="combat-log">STABLE</div>
-            </div>
-        </div>
-
-        <!-- START SCREEN -->
-        <div id="start-screen" class="overlay active">
-            <div class="content">
-                <h1 class="glitch" data-text="CLASH//CORE">CLASH//CORE</h1>
-                <p>ONLY PERFECT CLASHES DEAL DAMAGE.<br>WAIT FOR THE SYNC PULSE.<br>TIME YOUR STRIKE PRECISELY.</p>
-                <div class="controls-hint">
-                    PC: SPACE or CLICK to CLASH<br>
-                    MOBILE: TAP to CLASH
+                <!-- PAUSE SCREEN -->
+                <div id="pause-screen" class="overlay">
+                    <div class="content">
+                        <h2>SYSTEM PAUSED</h2>
+                        <button id="resume-btn">RESUME</button>
+                        <button id="restart-btn">REBOOT</button>
+                        <button class="exit-btn">EXIT HUB</button>
+                    </div>
                 </div>
-                <button id="start-btn">BOOT CORE</button>
-            </div>
-        </div>
 
-        <!-- PAUSE SCREEN -->
-        <div id="pause-screen" class="overlay">
-            <div class="content">
-                <h2>SYSTEM PAUSED</h2>
-                <button id="resume-btn">RESUME</button>
-                <button id="restart-btn">REBOOT</button>
-                <button class="exit-btn">EXIT HUB</button>
-            </div>
-        </div>
-
-        <!-- GAME OVER SCREEN -->
-        <div id="game-over-screen" class="overlay">
-            <div class="content">
-                <h2 id="death-msg">CORE BREACHED</h2>
-                <p>FINAL SYNC: <span id="final-score">000000</span></p>
-                <button id="retry-btn">RE-LINK</button>
-                <button class="exit-btn">EXIT HUB</button>
+                <!-- GAME OVER SCREEN -->
+                <div id="game-over-screen" class="overlay">
+                    <div class="content">
+                        <h2 id="death-msg">CORE BREACHED</h2>
+                        <p>FINAL SYNC: <span id="final-score">000000</span></p>
+                        <button id="retry-btn">RE-LINK</button>
+                        <button class="exit-btn">EXIT HUB</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

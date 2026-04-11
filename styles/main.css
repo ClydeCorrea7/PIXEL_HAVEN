@@ -26,8 +26,9 @@ body {
   background-color: var(--bg-color);
   color: var(--text-primary);
   font-family: 'Press Start 2P', cursive;
-  overflow: hidden;
-  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  min-height: 100vh;
   width: 100vw;
   display: flex;
   justify-content: center;
@@ -110,12 +111,12 @@ body {
   position: relative;
   width: 100%;
   max-width: 1200px;
-  height: 100%;
-  padding: 40px 20px;
+  min-height: 100vh;
+  padding: 60px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   z-index: 10;
 }
 
@@ -275,25 +276,51 @@ body {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 768px), (max-height: 500px) {
   body {
-    overflow-y: auto;
-    height: auto;
-    min-height: 100vh;
     align-items: flex-start;
   }
 
   .arcade-container {
-    height: auto;
-    min-height: 100vh;
-    justify-content: flex-start;
-    padding: 60px 20px;
+    padding: 30px 20px;
+  }
+
+  .main-header {
+    margin-bottom: 20px;
   }
 
   .main-header h1 {
     font-size: 1.8rem;
   }
 
+  .selector-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+
+  .game-tile {
+    width: 100px;
+    height: 100px;
+  }
+
+  .game-tile .tile-icon { font-size: 1.2rem; }
+  .game-tile .tile-label { font-size: 0.4rem; }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .arcade-container {
+    padding: 20px;
+  }
+  .selector-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  .game-details {
+    margin-top: 20px;
+    height: auto;
+  }
+}
+
+@media (max-width: 768px) and (orientation: portrait) {
   .selector-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;

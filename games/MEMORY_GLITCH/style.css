@@ -11,21 +11,44 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-body {
-    background-color: #000;
-    color: var(--cyan);
-    font-family: var(--body-font);
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
-    height: 100vh;
+    background: #000;
+    touch-action: none;
+}
+
+.game-wrapper {
+    position: fixed;
+    inset: 0;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    background: #000;
+    overflow: hidden;
+}
+
+.game-container {
+    width: 1280px;
+    height: 720px;
+    position: relative;
+    transform-origin: center center;
+    max-width: none;
+    max-height: none;
+    overflow: hidden;
+    background: #050505;
 }
 
 #arcade-terminal {
-    position: relative;
-    width: 900px; /* Landscape Width (v2.7) */
-    height: 600px; /* Landscape Height (v2.7) */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1200px;
+    height: 680px;
     background: var(--bg);
     border: 4px solid #333;
     box-shadow: 0 0 50px rgba(0,0,0,0.8);
@@ -289,39 +312,4 @@ button:hover {
     100% { box-shadow: 0 0 40px var(--gold); filter: brightness(1.7); }
 }
 
-/* ORIENTATION LOCK (v2.11) */
-#orientation-lock {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    background: #000;
-    z-index: 9999;
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: var(--cyan);
-    text-align: center;
-    padding: 20px;
-}
-
-#orientation-lock .rotate-icon {
-    font-size: 4rem;
-    margin-top: 20px;
-    animation: rotate-jump 2s infinite;
-}
-
-@keyframes rotate-jump {
-    0%, 100% { transform: rotate(0deg); }
-    50% { transform: rotate(90deg); }
-}
-
-@media screen and (orientation: portrait) {
-    #orientation-lock { display: flex; }
-}
-
-@media screen and (max-width: 900px) {
-    #arcade-terminal {
-        transform: scale(calc(100vw / 950));
-    }
-}
+/* UNIVERSAL SCALING ACTIVE */

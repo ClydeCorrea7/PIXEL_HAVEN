@@ -66,11 +66,11 @@ class Game {
     }
 
     resize() {
-        this.canvas.width = 600;
-        this.canvas.height = 800;
-        const isDesktop = window.innerWidth >= 768;
-        this.enemyY = isDesktop ? 320 : 240;
-        this.playerY = isDesktop ? 480 : 640;
+        this.canvas.width = 1280;
+        this.canvas.height = 720;
+        this.centerX = 640;
+        this.enemyY = 220;
+        this.playerY = 500;
     }
 
     playSound(type, freq, dur, vol = 0.1) {
@@ -169,8 +169,8 @@ class Game {
         this.scoreVal.innerText = String(this.score).padStart(6, '0');
         this.combatLog.innerText = 'PERFECT CLASH';
         this.combatLog.classList.add('perfect');
-        this.spawnParticles(300, (this.playerY + this.enemyY) / 2, '#fff', 30, 8);
-        this.spawnParticles(300, (this.playerY + this.enemyY) / 2, '#00f0ff', 20, 5);
+        this.spawnParticles(this.centerX, (this.playerY + this.enemyY) / 2, '#fff', 30, 8);
+        this.spawnParticles(this.centerX, (this.playerY + this.enemyY) / 2, '#00f0ff', 20, 5);
         this.freezeFrame(180);
         this.screenShake();
         this.playSound('square', 1200, 0.1, 0.15);
@@ -236,21 +236,21 @@ class Game {
     drawGrid() {
         this.ctx.strokeStyle = 'rgba(0, 240, 255, 0.05)';
         this.ctx.lineWidth = 1;
-        for (let i = -60; i < 660; i += 60) {
+        for (let i = -60; i < 1340; i += 60) {
             this.ctx.beginPath();
-            this.ctx.moveTo(i, 0); this.ctx.lineTo(i, 800);
+            this.ctx.moveTo(i, 0); this.ctx.lineTo(i, 720);
             this.ctx.stroke();
         }
-        for (let i = 0; i < 860; i += 60) {
+        for (let i = 0; i < 780; i += 60) {
             const y = i + this.gridOffset;
             this.ctx.beginPath();
-            this.ctx.moveTo(0, y); this.ctx.lineTo(600, y);
+            this.ctx.moveTo(0, y); this.ctx.lineTo(1280, y);
             this.ctx.stroke();
         }
     }
 
     drawPlayer(ctx) {
-        const x = 300;
+        const x = this.centerX;
         const y = this.playerY;
         
         // --- RANGE INDICATION (CENTERED AT PLAYER) ---
@@ -356,7 +356,7 @@ class Enemy {
         else (this.state = 'RECOVERY', this.recoveryTimer = 400);
     }
     draw(ctx) {
-        const x = 300;
+        const x = this.game.centerX;
         const y = this.game.enemyY;
         
         ctx.save();

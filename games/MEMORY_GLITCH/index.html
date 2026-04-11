@@ -2,76 +2,71 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
     <title>MEMORY//GLITCH // ARCADE_OS</title>
     <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/icons8-pixel-star-16.png">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Outfit:wght@300;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="arcade-terminal">
-        <div class="scanlines"></div>
-        <div class="vignette"></div>
+    <div class="game-wrapper">
+        <div class="game-container" id="gameContainer">
+            <div id="arcade-terminal">
+                <div class="scanlines"></div>
+                <div class="vignette"></div>
 
-        <!-- HUD: TOP -->
-        <div id="hud-top">
-            <div class="hud-item">
-                <span class="label">SECTOR:</span>
-                <span id="level-val" class="value">01</span>
-            </div>
-            <div class="hud-item">
-                <span class="label">STABILITY_FAILS:</span>
-                <div id="fail-meter">
-                    <!-- Dynamic bars -->
+                <!-- HUD: TOP -->
+                <div id="hud-top">
+                    <div class="hud-item">
+                        <span class="label">SECTOR:</span>
+                        <span id="level-val" class="value">01</span>
+                    </div>
+                    <div class="hud-item">
+                        <span class="label">STABILITY_FAILS:</span>
+                        <div id="fail-meter">
+                            <!-- Dynamic bars -->
+                        </div>
+                    </div>
+                    <div class="hud-item">
+                        <span class="label">PAIRS:</span>
+                        <span id="pairs-val" class="value">0/8</span>
+                    </div>
+                </div>
+
+                <!-- VIEWPORT -->
+                <div id="game-viewport">
+                    <div id="memory-grid"></div>
+
+                    <!-- SCREENS -->
+                    <div id="menu-screen" class="overlay active">
+                        <div class="glitch-title" data-text="MEMORY//GLITCH">MEMORY//GLITCH</div>
+                        <div class="status-box">SYSTEM_INIT // DEC_MODE_ENGAGED</div>
+                        <button id="start-btn">ENGAGE_NEURAL_LINK</button>
+                    </div>
+
+                    <div id="result-screen" class="overlay">
+                        <h2 id="result-title">SECTOR_CLEARED</h2>
+                        <div class="stat-line">NEURAL_STABILITY: <span id="final-stability">98%</span></div>
+                        <button id="next-btn" class="hidden">CONTINUE_LINK</button>
+                        <button id="restart-btn" class="hidden">REBOOT_SYSTEM</button>
+                    </div>
+                </div>
+
+                <!-- HUD: BOTTOM -->
+                <div id="hud-bottom">
+                    <div class="status-line">
+                        <span class="label">STATUS:</span>
+                        <span id="status-msg">SYSTEM_READY</span>
+                    </div>
+                    <div id="score-val-container" class="score-box">
+                        <span class="label">DATA_SYNC:</span>
+                        <span id="score-val" class="value">000000</span>
+                    </div>
                 </div>
             </div>
-            <div class="hud-item">
-                <span class="label">PAIRS:</span>
-                <span id="pairs-val" class="value">0/8</span>
-            </div>
-        </div>
 
-        <!-- VIEWPORT -->
-        <div id="game-viewport">
-            <div id="memory-grid"></div>
-
-            <!-- SCREENS -->
-            <div id="menu-screen" class="overlay active">
-                <div class="glitch-title" data-text="MEMORY//GLITCH">MEMORY//GLITCH</div>
-                <div class="status-box">SYSTEM_INIT // DEC_MODE_ENGAGED</div>
-                <button id="start-btn">ENGAGE_NEURAL_LINK</button>
-            </div>
-
-            <div id="result-screen" class="overlay">
-                <h2 id="result-title">SECTOR_CLEARED</h2>
-                <div class="stat-line">NEURAL_STABILITY: <span id="final-stability">98%</span></div>
-                <button id="next-btn" class="hidden">CONTINUE_LINK</button>
-                <button id="restart-btn" class="hidden">REBOOT_SYSTEM</button>
-            </div>
-        </div>
-
-        <!-- HUD: BOTTOM -->
-        <div id="hud-bottom">
-            <div class="status-line">
-                <span class="label">STATUS:</span>
-                <span id="status-msg">SYSTEM_READY</span>
-            </div>
-            <div class="score-box">
-                <span class="label">DATA_SYNC:</span>
-                <span id="score-val" class="value">000000</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Powerup Notification -->
-    <div id="powerup-alert"></div>
-
-    <!-- Orientation Lock Overlay (v2.11) -->
-    <div id="orientation-lock">
-        <div class="lock-box">
-            <div class="glitch-title" data-text="ORIENTATION_ERR">ORIENTATION_ERR</div>
-            <div class="status-box">SYSTEM_STABILITY_AT_RISK // ROTATE_DEVICE_90_DEG</div>
-            <div class="rotate-icon">🔄</div>
+            <!-- Powerup Notification -->
+            <div id="powerup-alert"></div>
         </div>
     </div>
 
